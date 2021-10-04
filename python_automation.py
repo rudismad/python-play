@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 # Send the mail
 import smtplib
 # email body
+import getpass
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 # system time and date manipulation
@@ -42,3 +43,14 @@ cnt = extract_news('https://news.ycombinator.com/')
 content += cnt
 content += ('<br>--------------<br>')
 content += ('<br><br> End of message')
+
+# lets send an email
+print('composing email')
+
+# update your email details
+
+SERVER = 'smtp.gmail.com'  # your email smtp, this one for gmail
+PORT = 587  # your port number
+FROM = 'gaisais777@gmail.com'  # your email adress you are sending from
+TO = 'gaisais777@gmail.com'  # your email adress that receives email
+PASS = getpass.getpass('Enter the password:')
