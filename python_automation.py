@@ -54,3 +54,28 @@ PORT = 587  # your port number
 FROM = 'gaisais777@gmail.com'  # your email adress you are sending from
 TO = 'gaisais777@gmail.com'  # your email adress that receives email
 PASS = getpass.getpass('Enter the password:')
+
+#fp=open(file_name, 'rb')
+# Create a text/plain message
+# msg=MIMEtext('')
+msg = MIMEMultipart()
+
+#msg.add_header('Content_Disposition', 'attachment', filename='empty.txt')
+msg['Subject'] = 'Top news stories from HN [Automated email]' + \
+    ''+str(now.day)+'-'+str(now.month)+'-'+str(now.year)
+msg['From'] = FROM
+msg['To'] = TO
+msg.attach(MIMEText(content, 'html'))
+# fp close()
+print('Initiating server')
+
+server = smtplib.SMTP(SERVER, PORT)
+# serversmtplib.SMTP SSL('smtp.gmail.com'. 4651)
+server.set_debuglevel(1)
+server.ehlo()
+server.starttls()
+# server.ehlo
+server.login(FROM, PASS)
+server.sendmail(FROM, TO, msg.as_string())
+print('Email sent')
+server.quit()
