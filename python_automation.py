@@ -1,6 +1,6 @@
-# import http requests
-from email.mime import text
 import requests
+
+from email.mime import text
 # for web scrapping
 from bs4 import BeautifulSoup
 # Send the mail
@@ -32,7 +32,7 @@ def extract_news(url):
     response = requests.get(url)
     # content of the web page, local variable
     content = response.content
-    soup = BeautifulSoup(content, 'html parser')
+    soup = BeautifulSoup(content, 'html.parser')
     for i, tag in enumerate(soup.find_all('td', attrs={'class': 'title', 'valign': ''})):
         cnt += ((str(i+1)+' :: '+tag.text+"\n"+'<br>')
                 if tag.text != 'More' else '')
@@ -52,17 +52,16 @@ print('composing email')
 SERVER = 'smtp.gmail.com'  # your email smtp, this one for gmail
 PORT = 587  # your port number
 FROM = 'gaisais777@gmail.com'  # your email adress you are sending from
-TO = 'gaisais777@gmail.com'  # your email adress that receives email
-PASS = getpass.getpass('Enter the password:')
+TO = 'klavins.rudolfs94@gmail.com'  # your email adress that receives email
+PASS = ''
 
-#fp=open(file_name, 'rb')
+# fp=open(file_name, 'rb')
 # Create a text/plain message
 # msg=MIMEtext('')
 msg = MIMEMultipart()
 
-#msg.add_header('Content_Disposition', 'attachment', filename='empty.txt')
-msg['Subject'] = 'Top news stories from HN [Automated email]' + \
-    ''+str(now.day)+'-'+str(now.month)+'-'+str(now.year)
+# msg.add_header('Content_Disposition', 'attachment', filename='empty.txt')
+msg['Subject'] = 'Top news stories from HN [Automated email]'
 msg['From'] = FROM
 msg['To'] = TO
 msg.attach(MIMEText(content, 'html'))
